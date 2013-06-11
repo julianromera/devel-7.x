@@ -1,7 +1,7 @@
-devel-6.x
+devel-7.x
 =========
 
-Drupal 6 CMS - Devel Module w/ Mods
+Drupal 7 CMS - Devel Module w/ Mods
 
 ***
 
