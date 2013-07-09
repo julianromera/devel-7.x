@@ -13,7 +13,13 @@
  *  An array of role IDs that the users should receive.
  */
 
-include_once('DICTIONARY.inc');
+// include_once('DICTIONARY.inc');
+function devel_generate_include_dict() {
+  $path = drupal_get_path('module', 'devel_generate');
+  require_once($path .'/DICTIONARY.inc');
+}
+    
+    
 
 function devel_create_users($num, $kill, $age = 0, $roles = array()) {
   $url = parse_url($GLOBALS['base_url']);
@@ -465,6 +471,16 @@ function devel_generate_links($num_links, $menus, $title_length, $link_types, $m
 }
 
 function devel_generate_word($length){
+
+devel_generate_include_dict();
+
+$array = generate_dictionary();    
+
+$word = $array[array_rand($array)];
+
+return $word;
+
+/*
   mt_srand((double)microtime()*1000000);
 
   $vowels = array("a", "e", "i", "o", "u");
@@ -479,7 +495,8 @@ function devel_generate_word($length){
     $word .= $cons[mt_rand(0, $num_cons - 1)] . $vowels[mt_rand(0, $num_vowels - 1)];
   }
 
-  return substr($word, 0, $length);
+  _return substr($word, 0, $length);
+*/
 }
 
 function devel_create_content($type = NULL) {
@@ -528,6 +545,12 @@ function devel_create_para($words, $type = 0) {
 }
 
 function devel_create_greeking($word_count, $title = FALSE) {
+  
+  devel_generate_include_dict();
+
+  $dictionary = generate_dictionary();
+  
+  /*
   $dictionary = array("abbas", "abdo", "abico", "abigo", "abluo", "accumsan",
     "acsi", "ad", "adipiscing", "aliquam", "aliquip", "amet", "antehabeo",
     "appellatio", "aptent", "at", "augue", "autem", "bene", "blandit",
@@ -558,8 +581,9 @@ function devel_create_greeking($word_count, $title = FALSE) {
     "veniam", "venio", "vereor", "vero", "verto", "vicis", "vindico",
     "virtus", "voco", "volutpat", "vulpes", "vulputate", "wisi", "ymo",
     "zelus");
+  */    
   $dictionary_flipped = array_flip($dictionary);
-
+  
   $greeking = '';
 
   if (!$title) {
@@ -677,6 +701,7 @@ function devel_generate_content_add_node(&$results) {
   $users = $results['users'];
   $node->uid = $users[array_rand($users)];
   $type = node_type_get_type($node);
+  $node->body = devel_generate_word(0);
   $node->title = $type->has_title ? devel_create_greeking(mt_rand(2, $results['title_length']), TRUE) : '';
   $node->revision = mt_rand(0,1);
   $node->promote = mt_rand(0, 1);

@@ -12,7 +12,7 @@ function generate_dictionary() {
 
   // how many sufixeds should i create per each root. 
   // e.g: root_elephant1, root_elephant2 <-- 2
-  $LIMIT_PER_ROOT = 1000;
+  $LIMIT_PER_ROOT = 30;
 
 
   // add sample words here
@@ -53,7 +53,7 @@ function generate_dictionary() {
         'house',
    );
   
-  
+  // 34 elems x 30 iteration --> 1020 combinations
   
   $DICT = array ();
   foreach ($ROOT_LIST as $root) { 
